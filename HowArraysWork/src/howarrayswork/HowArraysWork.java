@@ -11,30 +11,45 @@ package howarrayswork;
  */
 public class HowArraysWork {
 
-    /**
-     * @param args the command line arguments
-     */
+
+    private static int MAX_NUMBER = 1000000;
+    private static int POPULATION = 100000;
+    
     public static void main(String[] args) {
         int[] numArray = new int[1000000];
-        
-        for(int i = 0; i < 100000; i++){
-            int num = (int)(Math.random() * 999999 + 1);
-            if(numArray[num] == 0){
-                numArray[num] = num;
+        PopulateArray(numArray, POPULATION);
+        PrintArray(numArray);
+        CompactArray(numArray);
+        PrintArray(numArray);
+        System.out.println("Sum of Array: " + Sum(numArray));
+  
+    }
+    
+    private static int GetRandom(int maxNumber){
+        return (int)(Math.random() * maxNumber);
+    }
+    
+    private static void PopulateArray(int[] arr, int population){
+        for(int i = 0; i < population; i++){
+            int num = GetRandom(MAX_NUMBER);
+            if(arr[num] == 0 || arr[num] == Integer.MIN_VALUE ){
+                arr[num] = num;
             }
             else{
                 i--;
             }
         }
-        
+    }
+    
+    private static void CompactArray(int[] arr){
         int i = 0;
-        while(i < 100000){
-            if(numArray[i] == 0){
+        while(i < POPULATION){
+            if(arr[i] == 0){
                 int j = i+1;
-                while(true){
-                    if(numArray[j] != 0){
-                        numArray[i] = numArray[j];
-                        numArray[j] = 0;
+                while(j < MAX_NUMBER){
+                    if(arr[j] != 0){
+                        arr[i] = arr[j];
+                        arr[j] = 0;
                         i++;
                         break;
                     }
@@ -44,14 +59,23 @@ public class HowArraysWork {
                 }
             }
         }
-        
-        for(int k = 0; k < numArray.length; k++){
-            System.out.print(numArray[k] + ", ");
+    }
+    
+    private static void PrintArray(int[] arr){
+        for(int k = 0; k < arr.length; k++){
+            System.out.print(arr[k] + ", ");
             
         }
         
-        
-        
+        System.out.println(" \n");
+    }
+    
+    private static long Sum(int[] arr){
+        long sum = 0;
+        for(int i = 0; i < arr.length; i++){
+            sum = sum + arr[i];
+        }
+        return sum;
     }
     
 }
